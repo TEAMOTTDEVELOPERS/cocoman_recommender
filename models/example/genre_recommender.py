@@ -22,7 +22,7 @@ if __name__ == '__main__':
     document = netflix.data['description']
 
     recommender = GenreRecommender(document)
-    indices = recommender.recommend('blood dark humor')
+    indices = recommender.recommend('hero')
 
     for i in indices:
         print(netflix.data['title'][i])
