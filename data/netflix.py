@@ -7,6 +7,7 @@ import nltk
 nltk.download('punkt')
 nltk.download('wordnet')
 
+
 class NetflixData:
     def __init__(self):
         self.data = None
@@ -15,7 +16,7 @@ class NetflixData:
     def load_data(self):
         lemm = WordNetLemmatizer()
 
-        raw_data = pd.read_csv('../datasets/netflix_titles.csv')
+        raw_data = pd.read_csv('../../datasets/netflix_titles.csv')
 
         description = raw_data['description'].copy()
 
