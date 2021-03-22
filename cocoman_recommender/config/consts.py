@@ -1,0 +1,3 @@
+EXCEPT_PATH_REGEX = "^(/docs|/redoc)"
+MAX_API_KEY = 3
+MAX_API_WHITELIST = 10

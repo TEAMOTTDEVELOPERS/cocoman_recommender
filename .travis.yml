@@ -1,0 +1,15 @@
+language: python
+python:
+  - "3.6.9"
+
+# command to install dependencies
+before_install:
+  - pip install --upgrade pip
+  - pip install poetry==1.1.4
+install:
+  - poetry install
+
+# command to run tests
+script:
+  - poetry run pytest tests
+  - pylint cocoman_recommender tests --errors-only

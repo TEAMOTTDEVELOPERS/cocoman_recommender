@@ -5,7 +5,7 @@ from keras.activations import sigmoid
 from keras.losses import BinaryCrossentropy
 from keras.optimizers import Adam
 
-from data.movielens import MovielensData
+from cocoman_recommender.services.data.movielens import MovielensData
 
 
 class CollaborativeFilteringModel(keras.Model):
