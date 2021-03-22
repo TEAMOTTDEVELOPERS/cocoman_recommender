@@ -41,8 +41,8 @@ class MovielensData:
 
     @staticmethod
     def predict(user_id, model, top_k):
-        raw_rating_data = pd.read_csv('../datasets/movielens/rating.csv')
-        raw_movie_data = pd.read_csv('../datasets/movielens/movie.csv')
+        raw_rating_data = pd.read_csv('../../datasets/movielens/rating.csv')
+        raw_movie_data = pd.read_csv('../../datasets/movielens/movie.csv')
 
         user_ids = raw_rating_data['userId'].unique().tolist()
         user2user_encoded = {x: i for i, x in enumerate(user_ids)}

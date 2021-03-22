@@ -2,7 +2,7 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-from data.netflix import NetflixData
+from cocoman_recommender.services.data.netflix import NetflixData
 
 
 class GenreRecommender:

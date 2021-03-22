@@ -130,4 +130,4 @@ dmypy.json
 
 .idea/
 
-datasets
+cocoman_recommender/datasets

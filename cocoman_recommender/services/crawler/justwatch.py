@@ -27,7 +27,7 @@ def crawling(_target: str):
     BASE_URL = 'https://www.justwatch.com/kr/'
     BASE_ENCODED_URL = f'{base_encode}/'
 
-    driver = webdriver.Chrome('./chromedriver', options=options)
+    driver = webdriver.Chrome('chromedriver', options=options)
     contents_info = []
     driver.get(BASE_URL + BASE_ENCODED_URL + target_ott[_target])
 
