@@ -11,7 +11,9 @@ class Config:
     DB_ECHO: bool = True
     DEBUG: bool = False
     TEST_MODE: bool = False
-    DB_URL: str = environ.get("DB_URL", "")
+    DB_URL: str = "postgresql://{username}:{password}@127.0.0.1:5432/cocoman".format(
+        username='root', password='1234'
+    )
 
 
 @dataclass
@@ -29,7 +31,7 @@ class ProdConfig(Config):
 
 @dataclass
 class TestConfig:
-    DB_URL: str = "mysql+pymysql://travis@localhost/notification_test?charset=utf8mb4"
+    DB_URL: str = "postgresql://travis@localhost/notification_test?charset=utf8mb4"
     TRUSTED_HOSTS = ["*"]
     ALLOW_SITE = ["*"]
     TEST_MODE: bool = True
