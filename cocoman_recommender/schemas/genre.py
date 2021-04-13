@@ -19,5 +19,13 @@ class Genre(Base):
 
 
 class GenreRepository(BaseRepository):
+    def __init__(self, session_factory):
+        super().__init__(session_factory)
+
     def get_all(self) -> List[Genre]:
-        return self.session.query(Genre).all()
+        with self.session_factory() as session:
+            return session.query(Genre).all()
+
+    def get_by_id(self, id: int) -> Genre:
+        with self.session_factory() as session:
+            return session.query(Genre).get(id=id)

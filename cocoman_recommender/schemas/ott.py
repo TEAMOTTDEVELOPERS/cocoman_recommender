@@ -17,5 +17,13 @@ class Ott(Base):
 
 
 class OttRepository(BaseRepository):
+    def __init__(self, session_factory):
+        super().__init__(session_factory)
+
     def get_all(self) -> List[Ott]:
-        return self.session.query(Ott).all()
+        with self.session_factory() as session:
+            return session.query(Ott).all()
+
+    def get_by_id(self, id: int) -> Ott:
+        with self.session_factory() as session:
+            return session.query(Ott).get(id=id)

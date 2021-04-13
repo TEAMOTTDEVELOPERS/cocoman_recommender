@@ -20,5 +20,13 @@ class Actor(Base):
 
 
 class ActorRepository(BaseRepository):
+    def __init__(self, session_factory):
+        super().__init__(session_factory)
+
     def get_all(self) -> List[Actor]:
-        return self.session.query(Actor).all()
+        with self.session_factory() as session:
+            return session.query(Actor).all()
+
+    def get_by_id(self, id: int) -> Actor:
+        with self.session_factory() as session:
+            return session.query(Actor).get(id=id)

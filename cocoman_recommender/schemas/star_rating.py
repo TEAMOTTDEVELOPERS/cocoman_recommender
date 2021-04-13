@@ -19,5 +19,9 @@ class StarRating(Base):
 
 
 class StarRatingRepository(BaseRepository):
+    def __init__(self, session_factory):
+        super().__init__(session_factory)
+
     def get_all(self) -> List[StarRating]:
-        return self.session.query(StarRating).all()
+        with self.session_factory() as session:
+            return session.query(StarRating).all()

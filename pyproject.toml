@@ -28,6 +28,9 @@ fastapi-utils = "^0.2.1"
 pytest-describe = "^1.0.0"
 pytest-describe-it = "^0.1.0"
 dependency-injector = "^4.31.1"
+python-multipart = "^0.0.5"
+async-exit-stack = "^1.0.1"
+async_generator = "^1.10"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

@@ -26,5 +26,9 @@ class User(Base):
 
 
 class UserRepository(BaseRepository):
+    def __init__(self, session_factory):
+        super().__init__(session_factory)
+
     def get_all(self) -> List[User]:
-        return self.session.query(User).all()
+        with self.session_factory() as session:
+            return session.query(User).all()
