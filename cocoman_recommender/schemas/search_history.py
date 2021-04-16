@@ -22,5 +22,9 @@ class SearchHistory(Base):
 
 
 class SearchHistoryRepository(BaseRepository):
+    def __init__(self, session_factory):
+        super().__init__(session_factory)
+
     def get_all(self) -> List[SearchHistory]:
-        return self.session.query(SearchHistory).all()
+        with self.session_factory() as session:
+            return session.query(SearchHistory).all()

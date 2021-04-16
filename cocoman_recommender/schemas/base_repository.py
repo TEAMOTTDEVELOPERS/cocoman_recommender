@@ -1,6 +1,3 @@
-from sqlalchemy.orm import Session
-
-
 class BaseRepository:
-    def __init__(self, session: Session):
-        self.session = session
+    def __init__(self, session_factory):
+        self.session_factory = session_factory

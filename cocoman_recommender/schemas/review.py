@@ -22,5 +22,9 @@ class Review(Base):
 
 
 class ReviewRepository(BaseRepository):
+    def __init__(self, session_factory):
+        super().__init__(session_factory)
+
     def get_all(self) -> List[Review]:
-        return self.session.query(Review).all()
+        with self.session_factory() as session:
+            return session.query(Review).all()

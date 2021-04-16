@@ -19,5 +19,13 @@ class Keyword(Base):
 
 
 class KeywordRepository(BaseRepository):
+    def __init__(self, session_factory):
+        super().__init__(session_factory)
+
     def get_all(self) -> List[Keyword]:
-        return self.session.query(Keyword).all()
+        with self.session_factory() as session:
+            return session.query(Keyword).all()
+
+    def get_by_id(self, id: int) -> Keyword:
+        with self.session_factory() as session:
+            return session.query(Keyword).get(id=id)

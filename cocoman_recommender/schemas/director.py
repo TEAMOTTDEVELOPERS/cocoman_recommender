@@ -20,5 +20,13 @@ class Director(Base):
 
 
 class DirectorRepository(BaseRepository):
+    def __init__(self, session_factory):
+        super().__init__(session_factory)
+
     def get_all(self) -> List[Director]:
-        return self.session.query(Director).all()
+        with self.session_factory() as session:
+            return session.query(Director).all()
+
+    def get_by_id(self, id: int) -> Director:
+        with self.session_factory() as session:
+            return session.query(Director).get(id=id)
