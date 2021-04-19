@@ -1,6 +1,5 @@
 from fastapi import Depends, Body, APIRouter
 from fastapi_utils.cbv import cbv
-from fastapi_utils.inferring_router import InferringRouter
 from dependency_injector.wiring import inject, Provide
 
 from cocoman_recommender.models.contents_dto import ContentsDto

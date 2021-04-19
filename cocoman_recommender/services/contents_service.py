@@ -1,5 +1,4 @@
 import os.path
-import shutil
 from typing import List
 
 from cocoman_recommender.config.config import BASE_DIR
