@@ -1,4 +1,4 @@
-from fastapi import Depends, UploadFile, File
+from fastapi import Depends
 from fastapi_utils.cbv import cbv
 from fastapi_utils.inferring_router import InferringRouter
 from dependency_injector.wiring import inject, Provide
@@ -25,13 +25,13 @@ class ContentsController:
         return self.contents_service.find_by_id(id)
 
     @router.post('/create')
-    async def create(self, contents_dto: ContentsDto, poster_file: UploadFile = File(...)):
-        return self.contents_service.create(poster_file, contents_dto)
+    async def create(self, contents_dto: ContentsDto):
+        return self.contents_service.create(contents_dto)
 
     @router.post('/delete')
     async def delete(self, id: int):
         return self.contents_service.delete_by_id(id)
 
     @router.post('/update/{id}')
-    async def update(self, id: int, contents_dto: ContentsDto, poster_file: UploadFile = File(...)):
-        return self.contents_service.update(id, poster_file, contents_dto)
+    async def update(self, id: int, contents_dto: ContentsDto):
+        return self.contents_service.update(id, contents_dto)

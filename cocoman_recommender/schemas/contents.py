@@ -46,11 +46,11 @@ class Contents(Base):
     broadcast_date = Column(String(length=255))
     story = Column(String(length=500), nullable=False)
     poster_path = Column(String(length=255))
-    ott_id = relationship('Ott', secondary=contents_ott)
-    actors_id = relationship('Actor', secondary=contents_actor, back_populates='contents_set')
-    directors_id = relationship('Director', secondary=contents_director, back_populates='contents_set')
-    genres_id = relationship('Genre', secondary=contents_genre, back_populates='contents_set')
-    keywords_id = relationship('Keyword', secondary=contents_keyword, back_populates='contents_set')
+    ott_id = relationship('Ott', secondary=contents_ott, lazy='dynamic')
+    actors_id = relationship('Actor', secondary=contents_actor, back_populates='contents_set', lazy='dynamic')
+    directors_id = relationship('Director', secondary=contents_director, back_populates='contents_set', lazy='dynamic')
+    genres_id = relationship('Genre', secondary=contents_genre, back_populates='contents_set', lazy='dynamic')
+    keywords_id = relationship('Keyword', secondary=contents_keyword, back_populates='contents_set', lazy='dynamic')
 
 
 class ContentsRepository(BaseRepository):
@@ -63,12 +63,14 @@ class ContentsRepository(BaseRepository):
 
     def get_by_id(self, id: int):
         with self.session_factory() as session:
-            return session.query(Contents).get(id=id)
+            return session.query(Contents).filter(Contents.id == id).one()
 
     def create(self, entity: Contents):
         with self.session_factory() as session:
             session.add(entity)
             session.commit()
+            session.refresh(entity)
+            return entity
 
     def delete_by_id(self, id: int):
         with self.session_factory() as session:
@@ -77,20 +79,23 @@ class ContentsRepository(BaseRepository):
 
     def update(self, id: int, entity: Contents):
         with self.session_factory() as session:
-            content_query = session.query(Contents).filter(Contents.id == id)
-            content_query.update({'title': entity.title,
-                                  'year': entity.year,
-                                  'country': entity.country,
-                                  'running_time': entity.running_time,
-                                  'grade_rate': entity.grade_rate,
-                                  'broadcaster': entity.broadcaster,
-                                  'open_date': entity.open_date,
-                                  'broadcast_date': entity.broadcast_date,
-                                  'story': entity.story,
-                                  'poster_path': entity.poster_path,
-                                  'ott_id': entity.ott_id,
-                                  'actors_id': entity.actors_id,
-                                  'directors_id': entity.directors_id,
-                                  'genres_id': entity.genres_id,
-                                  'keywords_id': entity.keywords_id,
-                                  }, synchronize_session='fetch')
+            content = session.query(Contents).filter(Contents.id == id).one()
+            content.title = entity.title
+            content.year = entity.year
+            content.country = entity.country
+            content.running_time = entity.running_time
+            content.grade_rate = entity.grade_rate
+            content.broadcaster = entity.broadcaster
+            content.open_date = entity.open_date
+            content.broadcast_date = entity.broadcast_date
+            content.story = entity.story
+            content.poster_path = entity.poster_path
+            content.ott_id = entity.ott_id
+            content.actors_id = entity.actors_id
+            content.directors_id = entity.directors_id
+            content.genres_id = entity.genres_id
+            content.keywords_id = entity.keywords_id
+            session.commit()
+
+            session.refresh(content)
+            return content
