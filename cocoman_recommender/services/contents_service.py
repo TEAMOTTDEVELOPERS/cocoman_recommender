@@ -113,12 +113,6 @@ class ContentsService:
             keyword = self.keyword_repository.get_by_id(keyword_id)
             keyword_list.append(keyword)
 
-        content = self.contents_repository.get_by_id(id)
-
-        if content.poster_path != '':
-            local_path = os.path.join(BASE_DIR + content.poster_path)
-            os.remove(local_path)
-
         content = Contents(title=contents_dto.title,
                            year=contents_dto.year,
                            country=contents_dto.country,
@@ -131,9 +125,9 @@ class ContentsService:
                            poster_path='',
                            ott_id=ott_list,
                            actors_id=actor_list,
-                           director_id=director_list,
-                           genre_id=genre_list,
-                           keyword_id=keyword_list
+                           directors_id=director_list,
+                           genres_id=genre_list,
+                           keywords_id=keyword_list
                            )
 
         self.contents_repository.update(id, content)

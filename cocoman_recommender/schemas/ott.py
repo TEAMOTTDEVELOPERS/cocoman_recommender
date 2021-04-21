@@ -26,4 +26,4 @@ class OttRepository(BaseRepository):
 
     def get_by_id(self, id: int) -> Ott:
         with self.session_factory() as session:
-            return session.query(Ott).get(id=id)
+            return session.query(Ott).filter(Ott.id == id).one()

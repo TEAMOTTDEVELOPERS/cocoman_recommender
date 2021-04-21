@@ -28,4 +28,4 @@ class KeywordRepository(BaseRepository):
 
     def get_by_id(self, id: int) -> Keyword:
         with self.session_factory() as session:
-            return session.query(Keyword).get(id=id)
+            return session.query(Keyword).filter(Keyword.id == id).one()

@@ -29,4 +29,4 @@ class DirectorRepository(BaseRepository):
 
     def get_by_id(self, id: int) -> Director:
         with self.session_factory() as session:
-            return session.query(Director).get(id=id)
+            return session.query(Director).filter(Director.id == id).one()
