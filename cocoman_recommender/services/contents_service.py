@@ -1,7 +1,6 @@
 import os.path
 import shutil
 from typing import List
-from fastapi import UploadFile
 
 from cocoman_recommender.config.config import BASE_DIR
 from cocoman_recommender.models.contents_dto import ContentsDto
@@ -34,7 +33,7 @@ class ContentsService:
     def find_by_id(self, id: int) -> Contents:
         return self.contents_repository.get_by_id(id)
 
-    def create(self, poster_file: UploadFile, contents_dto: ContentsDto):
+    def create(self, contents_dto: ContentsDto):
         ott_list = []
         for ott_id in contents_dto.ott_set:
             ott = self.ott_repository.get_by_id(ott_id)
@@ -60,16 +59,6 @@ class ContentsService:
             keyword = self.keyword_repository.get_by_id(keyword_id)
             keyword_list.append(keyword)
 
-        if poster_file.filename != '':
-            _, extension = os.path.splitext(poster_file.filename)
-            file_name = 'contents_' + contents_dto.title
-            local_path = os.path.join(BASE_DIR + '/static/img' + file_name)
-            with open(local_path, 'wb') as buffer:
-                shutil.copyfileobj(poster_file.file, buffer)
-            poster_path = os.path.join('/static/img' + file_name)
-        else:
-            poster_path = ''
-
         content = Contents(title=contents_dto.title,
                            year=contents_dto.year,
                            country=contents_dto.country,
@@ -79,12 +68,12 @@ class ContentsService:
                            open_date=contents_dto.open_date,
                            broadcast_date=contents_dto.broadcast_date,
                            story=contents_dto.story,
-                           poster_path=poster_path,
+                           poster_path='',
                            ott_id=ott_list,
                            actors_id=actor_list,
-                           director_id=director_list,
-                           genre_id=genre_list,
-                           keyword_id=keyword_list
+                           directors_id=director_list,
+                           genres_id=genre_list,
+                           keywords_id=keyword_list
                            )
 
         self.contents_repository.create(content)
@@ -98,7 +87,7 @@ class ContentsService:
 
         self.contents_repository.delete_by_id(id)
 
-    def update(self, id: int, poster_file: UploadFile, contents_dto: ContentsDto):
+    def update(self, id: int, contents_dto: ContentsDto):
         ott_list = []
         for ott_id in contents_dto.ott_set:
             ott = self.ott_repository.get_by_id(ott_id)
@@ -124,22 +113,6 @@ class ContentsService:
             keyword = self.keyword_repository.get_by_id(keyword_id)
             keyword_list.append(keyword)
 
-        content = self.contents_repository.get_by_id(id)
-
-        if content.poster_path != '':
-            local_path = os.path.join(BASE_DIR + content.poster_path)
-            os.remove(local_path)
-
-        if poster_file.filename != '':
-            _, extension = os.path.splitext(poster_file.filename)
-            file_name = 'contents_' + contents_dto.title
-            local_path = os.path.join(BASE_DIR + '/static/img' + file_name)
-            with open(local_path, 'wb') as buffer:
-                shutil.copyfileobj(poster_file.file, buffer)
-            poster_path = os.path.join('/static/img' + file_name)
-        else:
-            poster_path = ''
-
         content = Contents(title=contents_dto.title,
                            year=contents_dto.year,
                            country=contents_dto.country,
@@ -149,12 +122,12 @@ class ContentsService:
                            open_date=contents_dto.open_date,
                            broadcast_date=contents_dto.broadcast_date,
                            story=contents_dto.story,
-                           poster_path=poster_path,
+                           poster_path='',
                            ott_id=ott_list,
                            actors_id=actor_list,
-                           director_id=director_list,
-                           genre_id=genre_list,
-                           keyword_id=keyword_list
+                           directors_id=director_list,
+                           genres_id=genre_list,
+                           keywords_id=keyword_list
                            )
 
         self.contents_repository.update(id, content)

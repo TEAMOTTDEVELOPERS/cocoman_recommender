@@ -29,4 +29,4 @@ class ActorRepository(BaseRepository):
 
     def get_by_id(self, id: int) -> Actor:
         with self.session_factory() as session:
-            return session.query(Actor).get(id=id)
+            return session.query(Actor).filter(Actor.id == id).one()

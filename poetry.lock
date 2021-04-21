@@ -619,31 +619,6 @@ wcwidth = "*"
 testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "requests", "xmlschema"]
 
 [[package]]
-name = "pytest-describe"
-version = "1.0.0"
-description = "Describe-style plugin for pytest"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-pytest = ">=2.6.0"
-
-[[package]]
-name = "pytest-describe-it"
-version = "0.1.0"
-description = "plugin for rich text descriptions"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-pytest = "*"
-
-[package.extras]
-test = ["pycodestyle"]
-
-[[package]]
 name = "python-dateutil"
 version = "2.8.1"
 description = "Extensions to the standard Python datetime module"
@@ -1020,7 +995,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pyt
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.6.8"
-content-hash = "a67fa5f3589d7b59509ce3059f100b9be3a935871af059b14e4d6dc451cf30ab"
+content-hash = "f8328c0d5decc7f0a3503af5252594a06f26581714a2a58578b5909eee95ba5d"
 
 [metadata.files]
 absl-py = [
@@ -1572,15 +1547,6 @@ pyparsing = [
 pytest = [
     {file = "pytest-5.2.0-py3-none-any.whl", hash = "sha256:13c1c9b22127a77fc684eee24791efafcef343335d855e3573791c68588fe1a5"},
     {file = "pytest-5.2.0.tar.gz", hash = "sha256:d8ba7be9466f55ef96ba203fc0f90d0cf212f2f927e69186e1353e30bc7f62e5"},
-]
-pytest-describe = [
-    {file = "pytest-describe-1.0.0.tar.gz", hash = "sha256:3e2ea0e77efa09edb98cf90423bf1da21a462ed90bd3120f8f98fe7519a167d5"},
-    {file = "pytest_describe-1.0.0-py2-none-any.whl", hash = "sha256:cc3862662faa5a6fb721927aaef46b46cf787e4a8163e5459fc8778e650fabad"},
-    {file = "pytest_describe-1.0.0-py3-none-any.whl", hash = "sha256:95fe78639d4d16c4a1e7d62c70f63030b217c08d2ee6dca49559fe6e730c6696"},
-]
-pytest-describe-it = [
-    {file = "pytest-describe-it-0.1.0.tar.gz", hash = "sha256:58789035ea73dce10253630c33de9b3afa2e3af320239bab137f2b7c9cb90a37"},
-    {file = "pytest_describe_it-0.1.0-py2.py3-none-any.whl", hash = "sha256:102b14cdeea668eff089d706e03698b518d53174d2e1aed3c55c0e70a7ed7cf3"},
 ]
 python-dateutil = [
     {file = "python-dateutil-2.8.1.tar.gz", hash = "sha256:73ebfe9dbf22e832286dafa60473e4cd239f8592f699aa5adaf10050e6e1823c"},

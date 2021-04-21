@@ -28,4 +28,4 @@ class GenreRepository(BaseRepository):
 
     def get_by_id(self, id: int) -> Genre:
         with self.session_factory() as session:
-            return session.query(Genre).get(id=id)
+            return session.query(Genre).filter(Genre.id == id).one()
