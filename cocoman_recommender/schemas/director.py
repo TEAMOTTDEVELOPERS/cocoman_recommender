@@ -16,7 +16,7 @@ class Director(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(length=255), nullable=False)
     image_path = Column(String(length=255))
-    contents_set = relationship('Contents', secondary=contents_director, back_populates='directors_id')
+    contents_set = relationship('Contents', secondary=contents_director, back_populates='directors')
 
 
 class DirectorRepository(BaseRepository):
@@ -30,3 +30,14 @@ class DirectorRepository(BaseRepository):
     def get_by_id(self, id: int) -> Director:
         with self.session_factory() as session:
             return session.query(Director).filter(Director.id == id).one()
+
+    def get_by_name(self, name: str):
+        with self.session_factory() as session:
+            return session.query(Director).filter(Director.name == name).one()
+
+    def create(self, entity: Director):
+        with self.session_factory() as session:
+            session.add(entity)
+            session.commit()
+            session.refresh(entity)
+            return entity

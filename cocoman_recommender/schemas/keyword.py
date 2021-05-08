@@ -15,7 +15,7 @@ class Keyword(Base):
     __tablename__ = 'TB_KEYWORD'
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(length=255))
-    contents_set = relationship('Contents', secondary=contents_keyword, back_populates='keywords_id')
+    contents_set = relationship('Contents', secondary=contents_keyword, back_populates='keywords')
 
 
 class KeywordRepository(BaseRepository):

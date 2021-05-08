@@ -27,3 +27,14 @@ class OttRepository(BaseRepository):
     def get_by_id(self, id: int) -> Ott:
         with self.session_factory() as session:
             return session.query(Ott).filter(Ott.id == id).one()
+
+    def get_by_name(self, name: str):
+        with self.session_factory() as session:
+            return session.query(Ott).filter(Ott.name == name).one()
+
+    def create(self, entity: Ott):
+        with self.session_factory() as session:
+            session.add(entity)
+            session.commit()
+            session.refresh(entity)
+            return entity

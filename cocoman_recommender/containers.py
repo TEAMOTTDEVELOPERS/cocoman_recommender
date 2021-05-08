@@ -10,6 +10,8 @@ from cocoman_recommender.schemas.director import DirectorRepository
 from cocoman_recommender.schemas.genre import GenreRepository
 from cocoman_recommender.schemas.keyword import KeywordRepository
 from cocoman_recommender.services.contents_service import ContentsService
+from cocoman_recommender.services.crawler.justwatch import JustWatchCrawler
+from cocoman_recommender.services.recommender_service import GenreRecommenderService
 
 
 class Container(containers.DeclarativeContainer):
@@ -33,3 +35,7 @@ class Container(containers.DeclarativeContainer):
                                          director_repository=director_repository,
                                          genre_repository=genre_repository,
                                          keyword_repository=keyword_repository)
+    justwatcher_crawler = providers.Factory(JustWatchCrawler, ott_repository=ott_repository,
+                                            contents_repository=contents_repository, actor_repository=actor_repository,
+                                            director_repository=director_repository, genre_repository=genre_repository)
+    genre_recommender = providers.Factory(GenreRecommenderService, contents_repository=contents_repository)

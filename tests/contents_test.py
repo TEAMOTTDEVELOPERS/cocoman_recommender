@@ -18,6 +18,9 @@ class ContentsTest(TestCase):
             session.query(Contents).delete()
             session.commit()
 
+    def test_setup(self):
+        self.container.db().create_database()
+
     def test_read_contents(self):
         contents = Contents(
             title='example',
@@ -29,11 +32,11 @@ class ContentsTest(TestCase):
             open_date='20210101',
             broadcast_date='20210101',
             story='example',
-            ott_id=[],
-            actors_id=[],
-            directors_id=[],
-            genres_id=[],
-            keywords_id=[]
+            ott=[],
+            actors=[],
+            directors=[],
+            genres=[],
+            keywords=[]
         )
         content = self.container.contents_repository().create(contents)
         result = self.container.contents_repository().get_by_id(content.id)
@@ -50,11 +53,11 @@ class ContentsTest(TestCase):
             open_date='20210101',
             broadcast_date='20210101',
             story='example',
-            ott_id=[],
-            actors_id=[],
-            directors_id=[],
-            genres_id=[],
-            keywords_id=[]
+            ott=[],
+            actors=[],
+            directors=[],
+            genres=[],
+            keywords=[]
         )
         content = self.container.contents_repository().create(contents)
         contents.title = 'example1'
@@ -73,11 +76,11 @@ class ContentsTest(TestCase):
             open_date='20210101',
             broadcast_date='20210101',
             story='example',
-            ott_id=[],
-            actors_id=[],
-            directors_id=[],
-            genres_id=[],
-            keywords_id=[]
+            ott=[],
+            actors=[],
+            directors=[],
+            genres=[],
+            keywords=[]
         )
         content = self.container.contents_repository().create(contents)
 
