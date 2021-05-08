@@ -68,11 +68,11 @@ class ContentsService:
                            broadcast_date=contents_dto.broadcast_date,
                            story=contents_dto.story,
                            poster_path='',
-                           ott_id=ott_list,
-                           actors_id=actor_list,
-                           directors_id=director_list,
-                           genres_id=genre_list,
-                           keywords_id=keyword_list
+                           ott=ott_list,
+                           actors=actor_list,
+                           directors=director_list,
+                           genres=genre_list,
+                           keywords=keyword_list
                            )
 
         self.contents_repository.create(content)
@@ -122,11 +122,11 @@ class ContentsService:
                            broadcast_date=contents_dto.broadcast_date,
                            story=contents_dto.story,
                            poster_path='',
-                           ott_id=ott_list,
-                           actors_id=actor_list,
-                           directors_id=director_list,
-                           genres_id=genre_list,
-                           keywords_id=keyword_list
+                           ott=ott_list,
+                           actors=actor_list,
+                           directors=director_list,
+                           genres=genre_list,
+                           keywords=keyword_list
                            )
 
         self.contents_repository.update(id, content)

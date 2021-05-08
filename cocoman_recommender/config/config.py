@@ -1,7 +1,7 @@
 from os import path, environ
 from dataclasses import dataclass
 
-BASE_DIR = path.dirname(path.dirname(path.dirname(path.abspath(__file__))))
+BASE_DIR = path.dirname(path.dirname(path.dirname(path.abspath(__file__))) + "/cocoman_recommender")
 
 
 @dataclass

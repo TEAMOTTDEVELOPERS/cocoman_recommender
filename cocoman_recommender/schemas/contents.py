@@ -10,6 +10,7 @@ from sqlalchemy.orm import relationship
 
 from cocoman_recommender.schemas.base_repository import BaseRepository
 from cocoman_recommender.schemas.conn import Base
+from cocoman_recommender.schemas.ott import Ott
 
 contents_ott = Table('contents_ott', Base.metadata,
                      Column('contents_id', Integer, ForeignKey('TB_CONTENTS.id'), primary_key=True),
@@ -17,19 +18,19 @@ contents_ott = Table('contents_ott', Base.metadata,
                      )
 contents_actor = Table('contents_actor', Base.metadata,
                        Column('contents_id', Integer, ForeignKey('TB_CONTENTS.id'), primary_key=True),
-                       Column('actor_id', Integer, ForeignKey('TB_ACTOR.id'), primary_key=True)
+                       Column('actors_id', Integer, ForeignKey('TB_ACTOR.id'), primary_key=True)
                        )
 contents_director = Table('contents_director', Base.metadata,
                           Column('contents_id', Integer, ForeignKey('TB_CONTENTS.id'), primary_key=True),
-                          Column('director_id', Integer, ForeignKey('TB_DIRECTOR.id'), primary_key=True)
+                          Column('directors_id', Integer, ForeignKey('TB_DIRECTOR.id'), primary_key=True)
                           )
 contents_genre = Table('contents_genre', Base.metadata,
                        Column('contents_id', Integer, ForeignKey('TB_CONTENTS.id'), primary_key=True),
-                       Column('genre_id', Integer, ForeignKey('TB_GENRE.id'), primary_key=True)
+                       Column('genres_id', Integer, ForeignKey('TB_GENRE.id'), primary_key=True)
                        )
 contents_keyword = Table('contents_keyword', Base.metadata,
                          Column('contents_id', Integer, ForeignKey('TB_CONTENTS.id'), primary_key=True),
-                         Column('keyword_id', Integer, ForeignKey('TB_KEYWORD.id'), primary_key=True)
+                         Column('keywords_id', Integer, ForeignKey('TB_KEYWORD.id'), primary_key=True)
                          )
 
 
@@ -46,11 +47,11 @@ class Contents(Base):
     broadcast_date = Column(String(length=255))
     story = Column(String(length=500), nullable=False)
     poster_path = Column(String(length=255))
-    ott_id = relationship('Ott', secondary=contents_ott, lazy='dynamic')
-    actors_id = relationship('Actor', secondary=contents_actor, back_populates='contents_set', lazy='dynamic')
-    directors_id = relationship('Director', secondary=contents_director, back_populates='contents_set', lazy='dynamic')
-    genres_id = relationship('Genre', secondary=contents_genre, back_populates='contents_set', lazy='dynamic')
-    keywords_id = relationship('Keyword', secondary=contents_keyword, back_populates='contents_set', lazy='dynamic')
+    ott = relationship('Ott', secondary=contents_ott, lazy='dynamic')
+    actors = relationship('Actor', secondary=contents_actor, back_populates='contents_set', lazy='dynamic')
+    directors = relationship('Director', secondary=contents_director, back_populates='contents_set', lazy='dynamic')
+    genres = relationship('Genre', secondary=contents_genre, back_populates='contents_set', lazy='dynamic')
+    keywords = relationship('Keyword', secondary=contents_keyword, back_populates='contents_set', lazy='dynamic')
 
 
 class ContentsRepository(BaseRepository):
@@ -61,9 +62,17 @@ class ContentsRepository(BaseRepository):
         with self.session_factory() as session:
             return session.query(Contents).all()
 
+    def get_all_by_ott(self, name) -> List[Contents]:
+        with self.session_factory() as session:
+            return session.query(Contents).join(Contents.ott).filter(Ott.name == name).all()
+
     def get_by_id(self, id: int):
         with self.session_factory() as session:
             return session.query(Contents).filter(Contents.id == id).one()
+
+    def get_by_title(self, title: str):
+        with self.session_factory() as session:
+            return session.query(Contents).filter(Contents.title == title).one()
 
     def create(self, entity: Contents):
         with self.session_factory() as session:
@@ -90,11 +99,11 @@ class ContentsRepository(BaseRepository):
             content.broadcast_date = entity.broadcast_date
             content.story = entity.story
             content.poster_path = entity.poster_path
-            content.ott_id = entity.ott_id
-            content.actors_id = entity.actors_id
-            content.directors_id = entity.directors_id
-            content.genres_id = entity.genres_id
-            content.keywords_id = entity.keywords_id
+            content.ott = entity.ott
+            content.actors = entity.actors
+            content.directors = entity.directors
+            content.genres = entity.genres
+            content.keywords = entity.keywords
             session.commit()
 
             session.refresh(content)

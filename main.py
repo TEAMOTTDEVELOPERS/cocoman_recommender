@@ -3,6 +3,8 @@ from fastapi import FastAPI
 
 from cocoman_recommender.containers import Container
 from cocoman_recommender.routers import contents_controller
+from cocoman_recommender.routers import crawler_controller
+from cocoman_recommender.routers import genre_recommend_controller
 
 
 def create_app():
@@ -10,7 +12,7 @@ def create_app():
     app = FastAPI()
 
     """ Define Container """
-    container.wire(modules=[contents_controller])
+    container.wire(modules=[contents_controller, crawler_controller, genre_recommend_controller])
 
     app.container = container
 
@@ -23,6 +25,8 @@ def create_app():
 
     """ Define Router """
     app.include_router(contents_controller.router, prefix='/contents')
+    app.include_router(crawler_controller.router, prefix='/crawling')
+    app.include_router(genre_recommend_controller.router, prefix='/recommend')
 
     return app
 

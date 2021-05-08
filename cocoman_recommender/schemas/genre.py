@@ -15,7 +15,7 @@ class Genre(Base):
     __tablename__ = 'TB_GENRE'
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(length=255), nullable=False)
-    contents_set = relationship('Contents', secondary=contents_genre, back_populates='genres_id')
+    contents_set = relationship('Contents', secondary=contents_genre, back_populates='genres')
 
 
 class GenreRepository(BaseRepository):
@@ -29,3 +29,14 @@ class GenreRepository(BaseRepository):
     def get_by_id(self, id: int) -> Genre:
         with self.session_factory() as session:
             return session.query(Genre).filter(Genre.id == id).one()
+
+    def get_by_name(self, name: str):
+        with self.session_factory() as session:
+            return session.query(Genre).filter(Genre.name == name).one()
+
+    def create(self, entity: Genre):
+        with self.session_factory() as session:
+            session.add(entity)
+            session.commit()
+            session.refresh(entity)
+            return entity

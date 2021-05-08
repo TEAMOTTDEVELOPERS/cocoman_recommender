@@ -16,7 +16,7 @@ class Actor(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(length=255), nullable=False)
     image_path = Column(String(length=255))
-    contents_set = relationship('Contents', secondary=contents_actor, back_populates='actors_id')
+    contents_set = relationship('Contents', secondary=contents_actor, back_populates='actors')
 
 
 class ActorRepository(BaseRepository):
@@ -30,3 +30,14 @@ class ActorRepository(BaseRepository):
     def get_by_id(self, id: int) -> Actor:
         with self.session_factory() as session:
             return session.query(Actor).filter(Actor.id == id).one()
+
+    def get_by_name(self, name: str):
+        with self.session_factory() as session:
+            return session.query(Actor).filter(Actor.name == name).one()
+
+    def create(self, entity: Actor):
+        with self.session_factory() as session:
+            session.add(entity)
+            session.commit()
+            session.refresh(entity)
+            return entity
